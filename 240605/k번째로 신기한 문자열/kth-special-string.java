@@ -11,7 +11,7 @@ public class Main {
         List<String> arr = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             String str = sc.next();
-            if (str.substring(0, len).equals(t)) {
+            if (str.length() >= len && str.substring(0, len).equals(t)) {
                 arr.add(str);
             }
         } // 문자열 t로 시작하는 단어만 필터링
