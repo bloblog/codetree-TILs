@@ -17,12 +17,10 @@ public class Main {
 
         // num을 b진수로 바꿔
         Stack<Integer> stack = new Stack<>();
-        while (num > 1) {
+        while (num >= 1) {
             stack.add(num % b);
             num = num / b;
         }
-
-        stack.add(1);
 
         // 출력
         while (!stack.isEmpty()) {
