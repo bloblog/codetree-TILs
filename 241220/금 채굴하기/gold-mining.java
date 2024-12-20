@@ -23,7 +23,7 @@ public class Main {
                 while (!flag) {
                     int fee = k * k + (k+1) * (k+1);
                     int goldCnt = getGold(k, i, j, land);
-                    if (goldCnt * m - fee > 0 && max < goldCnt) {
+                    if (goldCnt * m - fee >= 0 && max < goldCnt) {
                         max = goldCnt;
                     }
                     flag = check(++k, i, j, n);
