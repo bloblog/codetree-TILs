@@ -43,15 +43,14 @@ public class Main {
             }
         }
     }
-
-
+    
     static int count(int[][] arr) {
         int cnt = 0;
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr.length; j++) {
                 if (arr[i][j] == 0) continue;
                 int t = arr[i][j];
-                for (int d = 0; d < 4; d++) {
+                for (int d = 1; d < 3; d++) { // 우 하 만 체크
                     int nr = i + dr[d];
                     int nc = j + dc[d];
                     if (checkRange(nr, nc, arr.length)) continue;
