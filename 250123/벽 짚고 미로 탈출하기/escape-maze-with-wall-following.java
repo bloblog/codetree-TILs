@@ -19,67 +19,46 @@ public class Main {
             }
         } // 인풋 받기 끝
 
-        int[][][] visited = new int[n][n][4]; // 방문배열
-        visited[x][y][0] = 1;
+        boolean[][][] visited = new boolean[n][n][4]; // 방문배열
+        visited[x][y][0] = true;
 
         int d = 0;
         int cnt = 0;
-        while (checkRange(x, y, n)) {
+        while (true) {
             int nx = x + dr[d];
             int ny = y + dc[d];
-            // 이동 불가능
-            if (checkRange(nx, ny, n) && arr[nx][ny] == 1) {
-                // 반시계 방향 전환
-                d = (d+1) % 4;
+
+            if (!checkRange(nx, ny, n)) {
+                // 범위 밖으로 나가면 탈출 성공
+                cnt++;
+                break;
+            }
+
+            if (visited[nx][ny][d]) {
+                // 동일한 상태를 방문하면 탈출 실패
+                cnt = -1;
+                break;
+            }
+
+            if (arr[nx][ny] == 1) {
+                // 벽이면 반시계 방향 전환
+                d = (d + 1) % 4;
+            } else if (checkWall(nx, ny, d, arr)) {
+                // 벽이 없지만 짚을 수 있는 벽이 있으면 이동
+                x = nx;
+                y = ny;
+                visited[x][y][d] = true;
+                cnt++;
             } else {
-                if (!checkRange(nx, ny, n)) {
-                    // 탈출(범위 벗어남)한 경우
-                    // 위치 갱신 및 이동
-                    x = nx;
-                    y = ny;
-                    cnt++;
-                } else {
-                    // 다음 칸 짚을 벽 있는지 체크
-                    if (checkWall(nx, ny, d, arr)) {
-                        // 위치 갱신 및 이동
-                        x = nx;
-                        y = ny;
-                        // 탈출 실패 판별
-                        if (visited[x][y][d] == 1) {
-                            cnt = -1;
-                            break;
-                        }
-                        visited[x][y][d] = 1;
-                        cnt++;
-                    } else {
-                        // 탈출 실패 판별
-                        if (visited[nx][ny][d] == 1) {
-                            cnt = -1;
-                            break;
-                        }
-                        visited[nx][ny][d] = 1;
-                        cnt++;
-
-                        // 시계 방향 전환 및 한 칸 더 이동
-                        d = d-1 < 0 ? ((Math.abs(d-1) - 1) / 4 + 1) * 4 + d-1 : d-1;
-                        nx += dr[d];
-                        ny += dc[d];
-
-                        // 위치 갱신 및 이동
-                        x = nx;
-                        y = ny;
-                        // 탈출 실패 판별
-                        if (visited[x][y][d] == 1) {
-                            cnt = -1;
-                            break;
-                        }
-                        visited[x][y][d] = 1;
-                        cnt++;
-
-                    }
-                }
+                // 벽도 없고 짚을 벽도 없으면 시계 방향 전환 후 이동
+                d = (d + 3) % 4;
+                x = nx;
+                y = ny;
+                visited[x][y][d] = true;
+                cnt++;
             }
         }
+
         System.out.println(cnt);
 
     }
