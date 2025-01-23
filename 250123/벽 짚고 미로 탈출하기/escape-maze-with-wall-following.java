@@ -23,6 +23,7 @@ public class Main {
         visited[x][y][0] = 1;
 
         int d = 0;
+        int cnt = 0;
         boolean flag = true; // 탈출 가능 여부
         while (checkRange(x, y, n)) {
             int nx = x + dr[d];
@@ -45,17 +46,20 @@ public class Main {
                         y = ny;
                         // 탈출 실패 판별
                         if (visited[x][y][d] == 1) {
-                            flag = false;
+                            cnt = -1;
                             break;
                         }
                         visited[x][y][d] = 1;
+                        cnt++;
                     } else {
                         // 탈출 실패 판별
                         if (visited[nx][ny][d] == 1) {
-                            flag = false;
+                            cnt = -1;
                             break;
                         }
                         visited[nx][ny][d] = 1;
+                        cnt++;
+
 
                         // 시계 방향 전환 및 한 칸 더 이동
                         d = d-1 < 0 ? ((Math.abs(d-1) - 1) / 4 + 1) * 4 + d-1 : d-1;
@@ -67,31 +71,18 @@ public class Main {
                         y = ny;
                         // 탈출 실패 판별
                         if (visited[x][y][d] == 1) {
-                            flag = false;
+                            cnt = -1;
                             break;
                         }
                         visited[x][y][d] = 1;
-                    }
-
-                }
-            }
-        }
-        if (!flag) System.out.println(-1);
-        else {
-            int cnt = 0;
-
-            // 방문한 칸 개수 카운트
-            for (int i = 0; i < n; i++) {
-                for (int j = 0; j < n; j++) {
-                    for (int dir = 0; dir < 4; dir++) {
-                        if (visited[i][j][dir] == 1) {
-                            cnt++;
-                        }
+                        cnt++;
+                        
                     }
                 }
             }
-            System.out.println(cnt);
         }
+        System.out.println(cnt);
+
     }
     static int[] dr = new int[] {0, -1, 0, 1}; // 우 상 좌 하
     static int[] dc = new int[] {1, 0, -1, 0}; // 우 상 좌 하
