@@ -24,7 +24,6 @@ public class Main {
 
         int d = 0;
         int cnt = 0;
-        boolean flag = true; // 탈출 가능 여부
         while (checkRange(x, y, n)) {
             int nx = x + dr[d];
             int ny = y + dc[d];
@@ -38,6 +37,7 @@ public class Main {
                     // 위치 갱신 및 이동
                     x = nx;
                     y = ny;
+                    cnt++;
                 } else {
                     // 다음 칸 짚을 벽 있는지 체크
                     if (checkWall(nx, ny, d, arr)) {
@@ -60,7 +60,6 @@ public class Main {
                         visited[nx][ny][d] = 1;
                         cnt++;
 
-
                         // 시계 방향 전환 및 한 칸 더 이동
                         d = d-1 < 0 ? ((Math.abs(d-1) - 1) / 4 + 1) * 4 + d-1 : d-1;
                         nx += dr[d];
@@ -76,7 +75,7 @@ public class Main {
                         }
                         visited[x][y][d] = 1;
                         cnt++;
-                        
+
                     }
                 }
             }
