@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
@@ -20,8 +19,8 @@ public class Main {
             }
         } // 인풋 받기 끝
 
-        boolean[][] visited = new boolean[n][n]; // 방문배열
-        visited[x][y] = true;
+        int[][][] visited = new int[n][n][4]; // 방문배열
+        visited[x][y][0] = 1;
 
         int d = 0;
         boolean flag = true; // 탈출 가능 여부
@@ -44,19 +43,19 @@ public class Main {
                         // 위치 갱신 및 이동
                         x = nx;
                         y = ny;
-                        // 이동한 칸이 이미 방문한 칸이면 탈출 실패
-                        if (visited[x][y]) {
+                        // 탈출 실패 판별
+                        if (visited[x][y][d] == 1) {
                             flag = false;
                             break;
                         }
-                        visited[x][y] = true;
+                        visited[x][y][d] = 1;
                     } else {
-                        // 이동한 칸이 이미 방문한 칸이면 탈출 실패
-                        if (visited[nx][ny]) {
+                        // 탈출 실패 판별
+                        if (visited[nx][ny][d] == 1) {
                             flag = false;
                             break;
                         }
-                        visited[nx][ny] = true;
+                        visited[nx][ny][d] = 1;
 
                         // 시계 방향 전환 및 한 칸 더 이동
                         d = d-1 < 0 ? ((Math.abs(d-1) - 1) / 4 + 1) * 4 + d-1 : d-1;
@@ -66,12 +65,12 @@ public class Main {
                         // 위치 갱신 및 이동
                         x = nx;
                         y = ny;
-                        // 이동한 칸이 이미 방문한 칸이면 탈출 실패
-                        if (visited[x][y]) {
+                        // 탈출 실패 판별
+                        if (visited[x][y][d] == 1) {
                             flag = false;
                             break;
                         }
-                        visited[x][y] = true;
+                        visited[x][y][d] = 1;
                     }
 
                 }
@@ -80,10 +79,15 @@ public class Main {
         if (!flag) System.out.println(-1);
         else {
             int cnt = 0;
+
             // 방문한 칸 개수 카운트
             for (int i = 0; i < n; i++) {
                 for (int j = 0; j < n; j++) {
-                    if (visited[i][j]) cnt++;
+                    for (int dir = 0; dir < 4; dir++) {
+                        if (visited[i][j][dir] == 1) {
+                            cnt++;
+                        }
+                    }
                 }
             }
             System.out.println(cnt);
