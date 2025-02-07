@@ -53,14 +53,14 @@ public class Main {
 
             // 격자 벗어나면 return
             if (nr < 0 || nr >= arr.length || nc < 0 || nc >= arr.length) return t;
-            // 몸 꼬이면 return
-            if (arr[nr][nc] == -1) return t;
-
             // 다음 위치에 사과 있는 경우 제외하고 꼬리 사라짐 처리
             if (arr[nr][nc] != 1) {
                 int[] tail = snake.pollLast();
                 arr[tail[0]][tail[1]] = 0;
             }
+            // 몸 꼬이면 return
+            if (arr[nr][nc] == -1) return t;
+
 
             // 머리 처리
             snake.addFirst(new int[] {nr, nc});
