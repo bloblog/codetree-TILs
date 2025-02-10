@@ -27,11 +27,7 @@ public class Main {
                 dir[x][y].add(Arrays.asList(dirMap).indexOf(d));
             }
 
-            for (int time = 0; time < n*n; time++) {
-//                for (int[] a : arr) {
-//                    System.out.println(Arrays.toString(a));
-//                }
-//                System.out.println("--------");
+            for (int time = 0; time < n*2; time++) {
                 int[][] copyArr = new int[n][n];
                 for (int k = 0; k < n; k++) copyArr[k] = Arrays.copyOf(arr[k], n);
 
@@ -40,7 +36,6 @@ public class Main {
                     for (int c = 0; c < n; c++) {
                         if (arr[r][c] == 1) {
                             int d = dir[r][c].poll();
-//                            System.out.println("r = " + r + " c = " + c + " d = " + d);
                             int nr = r + dr[d];
                             int nc = c + dc[d];
                             // 벽에 부딪히면 방향 전환
