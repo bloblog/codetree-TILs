@@ -1,16 +1,18 @@
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
 
-        int t = sc.nextInt();
+        int t = Integer.parseInt(br.readLine());
         for (int i = 0; i < t; i++) {
-            int n = sc.nextInt();
-            int m = sc.nextInt();
+            st = new StringTokenizer(br.readLine());
+            int n = Integer.parseInt(st.nextToken());
+            int m = Integer.parseInt(st.nextToken());
             int[][] arr = new int[n][n];
             Queue<Integer>[][] dir = new Queue[n][n];
             for (int r = 0; r < n; r++) {
@@ -18,18 +20,22 @@ public class Main {
                     dir[r][c] = new LinkedList<>();
                 }
             }
+
             String[] dirMap = new String[] {"U", "D", "R", "L"};
             for (int j = 0; j < m; j++) {
-                int x = sc.nextInt()-1;
-                int y = sc.nextInt()-1;
-                String d = sc.next();
+                st = new StringTokenizer(br.readLine());
+                int x = Integer.parseInt(st.nextToken())-1;
+                int y = Integer.parseInt(st.nextToken())-1;
+                String d = st.nextToken();
                 arr[x][y]++;
                 dir[x][y].add(Arrays.asList(dirMap).indexOf(d));
             }
 
             for (int time = 0; time < n*2; time++) {
                 int[][] copyArr = new int[n][n];
-                for (int k = 0; k < n; k++) copyArr[k] = Arrays.copyOf(arr[k], n);
+                for (int k = 0; k < n; k++) {
+                    copyArr[k] = Arrays.copyOf(arr[k], n);
+                }
 
                 // 한 칸 이동
                 for (int r = 0; r < n; r++) {
@@ -61,8 +67,9 @@ public class Main {
                 }
 
                 // 원래 배열에 복사
-                for (int k = 0; k < n; k++) arr[k] = Arrays.copyOf(copyArr[k], n);
-
+                for (int k = 0; k < n; k++) {
+                    arr[k] = Arrays.copyOf(copyArr[k], n);
+                }
             }
 
             // 남은 구슬 카운트
