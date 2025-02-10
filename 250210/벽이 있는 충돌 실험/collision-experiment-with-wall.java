@@ -31,7 +31,7 @@ public class Main {
                 dir[x][y].add(Arrays.asList(dirMap).indexOf(d));
             }
 
-            for (int time = 0; time < n*2; time++) {
+            for (int time = 0; time < n + n/2; time++) {
                 int[][] copyArr = new int[n][n];
                 for (int k = 0; k < n; k++) {
                     copyArr[k] = Arrays.copyOf(arr[k], n);
