@@ -29,16 +29,17 @@ public class Main {
     static int max = 0;
 
     static int getCnt(int[] sel) {
-        int[] dr = new int[] {-1, 0, 1, 0, -1, -1, 1, 1};
-        int[] dc = new int[] {0, 1, 0, -1, -1, 1, -1, 1};
+        int[] dr = new int[] {-1, 1, 0, 0, -1, -1, 1, 1};
+        int[] dc = new int[] {0, 0, -1, 1, -1, 1, -1, 1};
         boolean[][] visited = new boolean[arr.length][arr.length];
 
         for (int i = 0; i < spot.size(); i++) {
             int[] t = spot.get(i);
-            int d = sel[i];
             int nr = t[0];
             int nc = t[1];
             visited[nr][nc] = true;
+
+            int d = sel[i];
             if (d == 0) {
                 for (int j = 0; j < 4; j++) {
                     if (j == 2) {
@@ -52,20 +53,21 @@ public class Main {
                 }
             } else if (d == 1) {
                 for (int j = 0; j < 4; j++) {
-                    nr += dr[j];
-                    nc += dc[j];
+                    nr = t[0] + dr[j];
+                    nc = t[1] + dc[j];
                     if (nr < 0 || nr >= arr.length || nc < 0 || nc >= arr.length) continue;
                     visited[nr][nc] = true;
                 }
             } else {
                 for (int j = 4; j < 8; j++) {
-                    nr += dr[j];
-                    nc += dc[j];
+                    nr = t[0] + dr[j];
+                    nc = t[1] + dc[j];
                     if (nr < 0 || nr >= arr.length || nc < 0 || nc >= arr.length) continue;
                     visited[nr][nc] = true;
                 }
             }
         }
+        // 카운트
         int cnt = 0;
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr.length; j++) {
