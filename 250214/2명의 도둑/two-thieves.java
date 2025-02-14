@@ -32,25 +32,43 @@ public class Main {
         }
 
         // 최대 무게 고려하여 무게 계산
-        int val1 = getMax(valArr[0]);
-        int val2 = getMax(valArr[1]);
+        int sum = 0;
+
+        maxVal = 0;
+        getMax(0, valArr[0], new boolean[m]);
+        sum += maxVal;
+
+        maxVal = 0;
+        getMax(0, valArr[1], new boolean[m]);
+        sum += maxVal;
+
         // 최대값 갱신
-        max = Math.max(max, val1 + val2);
+        max = Math.max(max, sum);
     }
 
-    static int getMax(int[] val) {
-        int weight = 0;
-        int value = 0;
-
-        Arrays.sort(val);
-        for (int i = val.length - 1; i >= 0; i--) {
-            if (weight + val[i] <= c) {
-                weight += val[i];
-                value += val[i] * val[i];
+    static int maxVal;
+    static void getMax(int idx, int[] val, boolean[] sel) {
+        if (idx == val.length) {
+            int valSum = 0;
+            int wSum = 0;
+            for (int i = 0; i < val.length; i++) {
+                if (sel[i]) {
+                    wSum += val[i];
+                    valSum += val[i] * val[i];
+                }
             }
+            if (wSum <= c) {
+                maxVal = Math.max(maxVal, valSum);
+            }
+            return;
         }
 
-        return value;
+        sel[idx] = true;
+        getMax(idx+1, val, sel);
+        sel[idx] = false;
+        getMax(idx+1, val, sel);
+
+//        return max;
     }
     static void selectCol(boolean flag, int[] selRow) {
         // 열 시작 지점 ~ 끝 지점
