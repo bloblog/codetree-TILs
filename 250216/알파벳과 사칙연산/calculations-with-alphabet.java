@@ -16,7 +16,7 @@ public class Main {
         int[] sel = new int[map.size()];
         getNum(0, sel, arrList);
 
-        int max = 0;
+        int max = Integer.MIN_VALUE;
         Character[] keySet = map.keySet().toArray(new Character[] {});
         for (int[] a : arrList) {
             for (int i = 0; i < map.size(); i++) {
