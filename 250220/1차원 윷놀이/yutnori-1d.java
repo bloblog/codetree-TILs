@@ -43,7 +43,7 @@ public class Main {
             return;
         }
 
-        for (int i = 1; i <= k; i++) {
+        for (int i = 0; i < k; i++) {
             sel[idx] = i;
             getPerm(idx+1, sel);
         }
