@@ -11,8 +11,8 @@ public class Main {
 
     public static int n;
 
-    static boolean check(int[] nums) {
-        int maxGap = n / 2;
+    static boolean check(int endIdx, int[] nums) {
+        int maxGap = endIdx / 2;
         // 한 칸 단위는 이미 체크함
         if (maxGap <= 1) return true;
 
@@ -21,11 +21,11 @@ public class Main {
             for (int i = 0; i < gap; i++) {
                 // 시작지점 i
                 // 범위 넘어가면 break
-                if (i + gap * 2 - 1 >= n) break;
+                if (i + gap * 2 - 1 >= endIdx) break;
 
                 String t = ""; // 바로 앞 연속 수열
                 String now = ""; // 현재 연속 수열
-                for (int j = i; j <= n - gap; j += gap) {
+                for (int j = i; j <= endIdx - gap; j += gap) {
                     for (int k = 0; k < gap; k++) {
                         now += nums[j + k];
                     }
@@ -44,7 +44,7 @@ public class Main {
     static void getNums(int idx, int[] nums) {
         if (idx == nums.length) {
             // 맨 처음 조건에 부합하는 수열을 출력
-            if (check(nums)) {
+            if (check(idx, nums)) {
                 for (int i = 0; i < n; i++) {
                     System.out.print(nums[i]);
                 }
@@ -56,12 +56,17 @@ public class Main {
         for (int i = 4; i <= 6; i++) {
             if (idx == 0) {
                 nums[idx] = i;
-                getNums(idx+1, nums);
+                // 체크 후 보낸다
+                if (check(idx+1, nums)) {
+                    getNums(idx+1, nums);
+                }
             } else {
                 // 바로 앞 숫자와 같은 숫자는 못들어감
                 if (nums[idx-1] != i) {
                     nums[idx] = i;
-                    getNums(idx+1, nums);
+                    if (check(idx+1, nums)) {
+                        getNums(idx+1, nums);
+                    }
                 }
             }
         }
