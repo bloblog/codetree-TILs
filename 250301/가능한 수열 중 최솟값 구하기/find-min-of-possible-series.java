@@ -25,7 +25,7 @@ public class Main {
 
                 String t = ""; // 바로 앞 연속 수열
                 String now = ""; // 현재 연속 수열
-                for (int j = i; j < n - 1; j += gap) {
+                for (int j = i; j < n - gap; j += gap) {
                     for (int k = 0; k < gap; k++) {
                         now += nums[j + k];
                     }
