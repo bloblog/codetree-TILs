@@ -12,25 +12,24 @@ public class Main {
 
         max = 0;
         boolean[] visited = new boolean[n];
-        select(0, 0, visited);
+        select(0, 0, 0);
         System.out.println(max);
     }
 
     static int n, m, max;
     static int[] arr;
 
-    static void select(int cnt, int now, boolean[] visited) {
+    static void select(int idx, int cnt, int now) {
         if (cnt == m) {
             max = Math.max(now, max);
             return;
         }
 
-        for (int i = 0; i < n; i++) {
-            if (!visited[i]) {
-                visited[i] = true;
-                select(cnt+1, now ^ arr[i], visited);
-                visited[i] = false;
-            }
-        }
+        if (idx == n) return;
+
+        // 선택 x
+        select(idx+1, cnt, now);
+        // 선택 o
+        select(idx+1, cnt+1, now ^ arr[idx]);
     }
 }
