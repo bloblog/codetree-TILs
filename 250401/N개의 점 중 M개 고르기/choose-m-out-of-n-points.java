@@ -18,10 +18,16 @@ public class Main {
                 dist.add(calc(points[i], points[j]));
             }
         }
-
+        
         Integer[] dArr = dist.toArray(new Integer[dist.size()]);
         Arrays.sort(dArr);
-        System.out.println(dArr[m-2]);
+        if (m == 2) {
+            System.out.println(dArr[0]);
+        } else if (n == m) {
+            System.out.println(dArr[dArr.length - 1]);
+        } else {
+            System.out.println(dArr[m - 1]);
+        }
     }
 
     public static int calc(int[] x, int[] y) {
