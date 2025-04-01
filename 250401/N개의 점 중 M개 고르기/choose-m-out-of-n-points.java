@@ -3,8 +3,8 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        int m = sc.nextInt();
+        n = sc.nextInt();
+        m = sc.nextInt();
         int[][] points = new int[n][2];
         for (int i = 0; i < n; i++) {
             points[i][0] = sc.nextInt();
@@ -12,21 +12,41 @@ public class Main {
         }
 
         // 모든 점간의 유클리디안 거리 제곱
-        List<Integer> dist = new ArrayList<>();
+        dist = new int[n][n];
         for (int i = 0; i < n; i++) {
             for (int j = i+1; j < n; j++) {
-                dist.add(calc(points[i], points[j]));
+                int v = calc(points[i], points[j]);
+                dist[i][j] = v;
+                dist[j][i] = v;
             }
         }
-        
-        Integer[] dArr = dist.toArray(new Integer[dist.size()]);
-        Arrays.sort(dArr);
-        if (m == 2) {
-            System.out.println(dArr[0]);
-        } else if (n == m) {
-            System.out.println(dArr[dArr.length - 1]);
-        } else {
-            System.out.println(dArr[m - 1]);
+
+        min = Integer.MAX_VALUE;
+        // m개 선택
+        select(0, 0, new int[m]);
+        System.out.println(min);
+
+    }
+
+    public static int n, m, min;
+    public static int[][] dist;
+
+    public static void select(int idx, int st, int[] sel) {
+        if (idx == m) {
+            // 해당 점들을 골랐을 때 가장 먼 두 점 사이의 거리 구하기
+            int max = 0;
+            for (int i = 0; i < sel.length-1; i++) {
+                for (int j = i+1; j < sel.length; j++) {
+                    max = Math.max(dist[sel[i]][sel[j]], max);
+                }
+            }
+            min = Math.min(min, max);
+            return;
+        }
+
+        for (int i = st; i < n; i++) {
+            sel[idx] = i;
+            select(idx+1, i+1, sel);
         }
     }
 
