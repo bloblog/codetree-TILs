@@ -23,6 +23,8 @@ public class Main {
         int sum = 0;
         int row = 0;
         for (int i = 0; i < n; i++) {
+            // 순회 불가한 경우 돌아가
+            if (cost[row][sel[i]] == 0) return;
             sum += cost[row][sel[i]];
             row = sel[i];
         }
